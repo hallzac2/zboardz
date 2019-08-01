@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef, NgZone, HostListener } from '@angular/core';
 import { Column } from 'src/app/models/column';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,12 +18,33 @@ export class ColumnComponent implements OnInit {
   allDropLists: string[];
   @Output()
   itemSwitchedColumn: EventEmitter<{ oldColumn: number, newCoulumn: number }> = new EventEmitter();
+  @ViewChild('itemNameEl', { static: false })
+  itemNameEl: ElementRef;
   items: Observable<Item[]>;
+  addModeEnabled = false;
 
   constructor(private itemService: ItemService) { }
 
   ngOnInit() {
-    this.items = this.getAllItemsInOrder();
+    this.refreshItems();
+  }
+
+  toggleAddMode(value: boolean) {
+    this.addModeEnabled = value;
+    if (this.addModeEnabled) {
+      this.focusItemNameInput();
+    }
+  }
+
+  addItem() {
+    const itemNameNativeEl = this.itemNameEl.nativeElement;
+    if (itemNameNativeEl.value) {
+      const item: Item = { columnId: this.column.id, name: itemNameNativeEl.value };
+      this.itemService.add(item);
+      this.refreshItems();
+      itemNameNativeEl.value = '';
+      this.focusItemNameInput();
+    }
   }
 
   onDrop(event) {
@@ -37,8 +58,8 @@ export class ColumnComponent implements OnInit {
     }
   }
 
-  private getAllItemsInOrder(): Observable<Item[]> {
-    return this.itemService.getAllItemsForColumn(this.column.id).pipe(
+  private refreshItems() {
+    this.items = this.itemService.getAllItemsForColumn(this.column.id).pipe(
       map(items => items.sort((left, right) => left.position - right.position))
     );
   }
@@ -52,6 +73,11 @@ export class ColumnComponent implements OnInit {
 
   private handleReorderItems(item: Item, targetPosition: number) {
     this.itemService.moveItemToPosition(item, targetPosition);
-    this.items = this.getAllItemsInOrder();
+    this.refreshItems();
+  }
+
+  private focusItemNameInput() {
+    // Use setTimeout to allow for the zone to stabilize
+    setTimeout(() => this.itemNameEl.nativeElement.focus());
   }
 }

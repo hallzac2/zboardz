@@ -1,7 +1,7 @@
 .column {
   background: #dfe1e6;
   margin: 5px;
-  min-width: 400px;
+  width: 400px;
 }
 
 .column-content {
@@ -10,4 +10,13 @@
   flex-wrap: nowrap;
   justify-content: flex-end;
   min-height: 50px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cancel-button {
+  margin-right: 8px;
 }

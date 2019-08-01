@@ -4,6 +4,6 @@
     <app-column *ngFor="let column of columns | async"
                 [allDropLists]="allDropLists"
                 [column]="column"
-                (itemSwitchedColumn)="handleColumnSwitch($event)"></app-column>
+                (itemSwitchedColumn)="refreshColumns()"></app-column>
   </div>
 </div>

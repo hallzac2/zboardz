@@ -11,20 +11,20 @@ export class ItemService {
 
   constructor() {
     this.itemsByColumnId.set(1, [
-      { id: 1, columnId: 1, position: 0, value: 'test 1' },
-      { id: 2, columnId: 1, position: 1, value: 'test 2' },
-      { id: 3, columnId: 1, position: 2, value: 'test 3' },
-      { id: 4, columnId: 1, position: 3, value: 'test 4' },
+      { id: 1, columnId: 1, position: 0, name: 'test 1' },
+      { id: 2, columnId: 1, position: 1, name: 'test 2' },
+      { id: 3, columnId: 1, position: 2, name: 'test 3' },
+      { id: 4, columnId: 1, position: 3, name: 'test 4' },
     ]);
 
     this.itemsByColumnId.set(2, [
-      { id: 5, columnId: 2, position: 0, value: 'test 1' },
-      { id: 6, columnId: 2, position: 1, value: 'test 2' },
+      { id: 5, columnId: 2, position: 0, name: 'test 1' },
+      { id: 6, columnId: 2, position: 1, name: 'test 2' },
     ]);
 
     this.itemsByColumnId.set(3, [
-      { id: 7, columnId: 3, position: 1, value: 'test 3' },
-      { id: 8, columnId: 3, position: 0, value: 'test 4' },
+      { id: 7, columnId: 3, position: 1, name: 'test 3' },
+      { id: 8, columnId: 3, position: 0, name: 'test 4' },
     ]);
   }
 
@@ -33,7 +33,11 @@ export class ItemService {
   }
 
   add(item: Item) {
-    // TODO add item to end of array
+    const columnId = item.columnId;
+    const id = this.findMaxForItemInColumn('id', columnId) + 1;
+    const position = this.findMaxForItemInColumn('position', columnId) + 1;
+    const itemToAdd = { ...item, id, position };
+    this.itemsByColumnId.get(columnId).push(itemToAdd);
   }
 
   delete(itemToDelete: Item) {
@@ -71,5 +75,11 @@ export class ItemService {
       newPosition++;
     }
     return newPosition;
+  }
+
+  private findMaxForItemInColumn(prop: 'id' | 'position', columnId: number): number {
+    return this.itemsByColumnId.get(columnId)
+      .map(item => item[prop])
+      .reduce((left, right) => (left > right) ? left : right);
   }
 }

@@ -26,7 +26,7 @@ export class BoardComponent implements OnInit {
     );
   }
 
-  handleColumnSwitch() {
+  refreshColumns() {
     this.columns = this.columnService.getAllForBoard(this.board.id).pipe(
       map(columns => columns.sort((left, right) => left.position - right.position)),
       tap(columns => this.allDropLists = columns.map(column => `${column.name}${column.id}`)),

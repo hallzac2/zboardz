@@ -12,4 +12,33 @@
               cdkDrag
               [cdkDragData]="item"></app-item>
   </mat-card-content>
+  <mat-card-content class="column-content">
+    <button mat-button
+            *ngIf="!addModeEnabled; else addItemTemplate"
+            color="accent"
+            (click)="toggleAddMode(true)">
+      Add an Item
+    </button>
+    <ng-template #addItemTemplate>
+      <mat-form-field *ngIf="addModeEnabled">
+        <input matInput
+               type="text"
+               placeholder="Item Name"
+               #itemNameEl
+               (keydown.enter)="addItem()">
+      </mat-form-field>
+      <div class="button-container">
+        <button mat-button
+                class="cancel-button"
+                (click)="toggleAddMode(false)">
+          Cancel
+        </button>
+        <button mat-flat-button
+                color="accent"
+                (click)="addItem()">
+          Add
+        </button>
+      </div>
+    </ng-template>
+  </mat-card-content>
 </mat-card>
