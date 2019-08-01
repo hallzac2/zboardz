@@ -1,0 +1,9 @@
+<div class="board-container">
+  <h3 class="board-title">{{board.name}}</h3>
+  <div class="column-container">
+    <app-column *ngFor="let column of columns | async"
+                [allDropLists]="allDropLists"
+                [column]="column"
+                (itemSwitchedColumn)="handleColumnSwitch($event)"></app-column>
+  </div>
+</div>

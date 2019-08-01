@@ -1,0 +1,15 @@
+<mat-card class="column">
+  <mat-card-header class="column-header">
+    <mat-card-title>{{column.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content id="{{column.name + column.id}}"
+                    [cdkDropListConnectedTo]="allDropLists"
+                    class="column-content"
+                    cdkDropList
+                    (cdkDropListDropped)="onDrop($event)">
+    <app-item *ngFor="let item of items | async"
+              [item]="item"
+              cdkDrag
+              [cdkDragData]="item"></app-item>
+  </mat-card-content>
+</mat-card>
