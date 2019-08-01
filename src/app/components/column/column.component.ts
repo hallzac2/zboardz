@@ -22,6 +22,7 @@ export class ColumnComponent implements OnInit {
   itemNameEl: ElementRef;
   items: Observable<Item[]>;
   addModeEnabled = false;
+  sourcedClickEvent = false;
 
   constructor(private itemService: ItemService) { }
 
@@ -29,22 +30,36 @@ export class ColumnComponent implements OnInit {
     this.refreshItems();
   }
 
-  toggleAddMode(value: boolean) {
-    this.addModeEnabled = value;
-    if (this.addModeEnabled) {
-      this.focusItemNameInput();
+  @HostListener('document:click')
+  handleOutsideClick() {
+    if (!this.sourcedClickEvent) {
+      this.disableAddMode();
+    } else {
+      this.sourcedClickEvent = false;
     }
   }
 
-  addItem() {
+  enableAddMode($event) {
+    this.sourcedClickEvent = true;
+    this.addModeEnabled = true;
+    this.focusItemNameInput();
+  }
+
+  disableAddMode() {
+    this.addModeEnabled = false;
+  }
+
+  addItem($event) {
+    $event.stopPropagation();
     const itemNameNativeEl = this.itemNameEl.nativeElement;
+
     if (itemNameNativeEl.value) {
       const item: Item = { columnId: this.column.id, name: itemNameNativeEl.value };
       this.itemService.add(item);
       this.refreshItems();
       itemNameNativeEl.value = '';
-      this.focusItemNameInput();
     }
+    this.focusItemNameInput();
   }
 
   onDrop(event) {
