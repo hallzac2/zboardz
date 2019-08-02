@@ -1,6 +1,6 @@
 # Zboardz
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
+This is an Angular app to try out Angular Material and the CDK.
 
 ## Development server
 
