@@ -1,7 +1,7 @@
 import { ReorderableItemStore } from './../stores/reorderable-item-store';
 import { Injectable } from '@angular/core';
 import { Item } from '../models/item';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
