@@ -1,19 +1,19 @@
 .board-title {
   color: white;
-  margin-left: 20px;
+  margin-left: 1rem;
   margin-bottom: 0;
 }
 
 .column-container {
   display: flex;
   align-items: flex-start;
-  padding: 10px 5px;
+  padding: 1rem 0.5rem;
 }
 
 .column {
   background: #dfe1e6;
-  margin: 5px;
-  width: 400px;
+  margin: 0.5rem;
+  width: 20rem;
 }
 
 .column-content {
@@ -21,5 +21,5 @@
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-end;
-  min-height: 50px;
+  min-height: 1rem;
 }
