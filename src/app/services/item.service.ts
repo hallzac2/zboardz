@@ -7,35 +7,36 @@ import { Observable, of } from 'rxjs';
 })
 export class ItemService {
 
+  private nextId = 9;
   private itemsByColumnId: Map<number, Item[]> = new Map();
 
   constructor() {
-    this.itemsByColumnId.set(1, [
-      { id: 1, columnId: 1, position: 0, name: '1' },
-      { id: 2, columnId: 1, position: 1, name: '2' },
-      { id: 3, columnId: 1, position: 2, name: '3' },
-      { id: 4, columnId: 1, position: 3, name: '4' },
-    ]);
-
-    this.itemsByColumnId.set(2, [
-      { id: 5, columnId: 2, position: 0, name: '5' },
-      { id: 6, columnId: 2, position: 1, name: '6' },
-    ]);
-
-    this.itemsByColumnId.set(3, [
-      { id: 7, columnId: 3, position: 1, name: '7' },
-      { id: 8, columnId: 3, position: 0, name: '8' },
-    ]);
+    this.add({ columnId: 1, name: '1' });
+    this.add({ columnId: 1, name: '2' });
+    this.add({ columnId: 1, name: '3' });
+    this.add({ columnId: 1, name: '4' });
+    this.add({ columnId: 2, name: '5' });
+    this.add({ columnId: 2, name: '6' });
+    this.add({ columnId: 2, name: '7' });
+    this.add({ columnId: 2, name: '8' });
+    this.add({ columnId: 3, name: '9' });
+    this.add({ columnId: 3, name: '10' });
+    this.add({ columnId: 3, name: '11' });
+    this.add({ columnId: 3, name: '12' });
   }
 
   getAllItemsForColumn(columnId: number): Observable<Item[]> {
-    return of(this.itemsByColumnId.get(columnId));
+    return of(this.itemsByColumnId.get(columnId) || []);
   }
 
   add(item: Item) {
     const columnId = item.columnId;
-    const id = this.findMaxForItemInColumn('id', columnId) + 1;
-    const position = this.findMaxForItemInColumn('position', columnId) + 1;
+    if (!this.itemsByColumnId.has(columnId)) {
+      this.itemsByColumnId.set(columnId, []);
+    }
+
+    const id = this.determineNextId();
+    const position = this.determineNextPosition(columnId);
     const itemToAdd = { ...item, id, position };
     this.itemsByColumnId.get(columnId).push(itemToAdd);
   }
@@ -77,9 +78,21 @@ export class ItemService {
     return newPosition;
   }
 
-  private findMaxForItemInColumn(prop: 'id' | 'position', columnId: number): number {
-    return this.itemsByColumnId.get(columnId)
-      .map(item => item[prop])
-      .reduce((left, right) => (left > right) ? left : right);
+  private determineNextId() {
+    const id = this.nextId;
+    this.nextId++;
+    return id;
+  }
+
+  private determineNextPosition(columnId: number): number {
+    const items = this.itemsByColumnId.get(columnId);
+    let position = 0;
+
+    if (items.length > 0) {
+      position = 1 + this.itemsByColumnId.get(columnId)
+        .map(item => item.position)
+        .reduce((left, right) => (left > right) ? left : right);
+    }
+    return position;
   }
 }
