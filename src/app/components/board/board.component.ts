@@ -23,10 +23,7 @@ export class BoardComponent implements OnInit {
   constructor(private columnService: ColumnService) { }
 
   ngOnInit() {
-    this.$columns = this.columnService.getAllForBoard(this.board.id).pipe(
-      map(columns => columns.sort((left, right) => left.position - right.position)),
-      tap(columns => this.allDropLists = columns.map(column => `${column.name}${column.id}`)),
-    );
+    this.refreshColumns();
   }
 
   handleItemSwitchedColumn(payload: { oldColumn: number, newColumn: number }) {
@@ -36,5 +33,17 @@ export class BoardComponent implements OnInit {
         return column.id === payload.oldColumn || column.id === payload.newColumn;
       })
       .forEach(columnComponent => columnComponent.refreshItems());
+  }
+
+  addColumn(name: string) {
+    this.columnService.add({ boardId: this.board.id, name });
+    this.refreshColumns();
+  }
+
+  private refreshColumns() {
+    this.$columns = this.columnService.getAllForBoard(this.board.id).pipe(
+      map(columns => columns.sort((left, right) => left.position - right.position)),
+      tap(columns => this.allDropLists = columns.map(column => `${column.name}${column.id}`)),
+    );
   }
 }

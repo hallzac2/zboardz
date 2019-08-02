@@ -19,4 +19,22 @@ export class ColumnService {
   getAllForBoard(boardId: number): Observable<Column[]> {
     return this.store.getAllForKey(boardId);
   }
+
+  add(column: Column) {
+    return this.store.add(column);
+  }
+
+  delete(column: Column) {
+    this.store.delete(column);
+  }
+
+  moveItemToColumn(column: Column, boardId: number, targetPosition: number) {
+    this.delete(column);
+    const addedItem = this.add({ boardId, name: column.name });
+    this.moveItemToPosition(addedItem, targetPosition);
+  }
+
+  moveItemToPosition(column: Column, targetPosition: number) {
+    this.store.moveItemToPosition(column, targetPosition);
+  }
 }

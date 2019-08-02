@@ -5,5 +5,12 @@
                 [allDropLists]="allDropLists"
                 [column]="column"
                 (itemSwitchedColumn)="handleItemSwitchedColumn($event)"></app-column>
+    <mat-card class="column">
+      <mat-card-content class="column-content">
+        <app-add buttonText="Add a Column"
+                 placeholderText="Column Name"
+                 (addedInput)="addColumn($event)"></app-add>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

@@ -9,3 +9,17 @@
   align-items: flex-start;
   padding: 10px 5px;
 }
+
+.column {
+  background: #dfe1e6;
+  margin: 5px;
+  width: 400px;
+}
+
+.column-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  min-height: 50px;
+}
