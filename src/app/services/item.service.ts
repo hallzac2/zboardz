@@ -11,20 +11,20 @@ export class ItemService {
 
   constructor() {
     this.itemsByColumnId.set(1, [
-      { id: 1, columnId: 1, position: 0, name: 'test 1' },
-      { id: 2, columnId: 1, position: 1, name: 'test 2' },
-      { id: 3, columnId: 1, position: 2, name: 'test 3' },
-      { id: 4, columnId: 1, position: 3, name: 'test 4' },
+      { id: 1, columnId: 1, position: 0, name: '1' },
+      { id: 2, columnId: 1, position: 1, name: '2' },
+      { id: 3, columnId: 1, position: 2, name: '3' },
+      { id: 4, columnId: 1, position: 3, name: '4' },
     ]);
 
     this.itemsByColumnId.set(2, [
-      { id: 5, columnId: 2, position: 0, name: 'test 1' },
-      { id: 6, columnId: 2, position: 1, name: 'test 2' },
+      { id: 5, columnId: 2, position: 0, name: '5' },
+      { id: 6, columnId: 2, position: 1, name: '6' },
     ]);
 
     this.itemsByColumnId.set(3, [
-      { id: 7, columnId: 3, position: 1, name: 'test 3' },
-      { id: 8, columnId: 3, position: 0, name: 'test 4' },
+      { id: 7, columnId: 3, position: 1, name: '7' },
+      { id: 8, columnId: 3, position: 0, name: '8' },
     ]);
   }
 
@@ -50,17 +50,17 @@ export class ItemService {
   }
 
   moveItemToPosition(itemToMove: Item, targetPosition: number) {
-      const newItems = this.itemsByColumnId.get(itemToMove.columnId)
-        .filter(item => item.id !== itemToMove.id)
-        .map(item => {
-          return {
-            ...item,
-            position: this.determineNewPosition(targetPosition, itemToMove.position, item.position)
-          };
-        });
+    const newItems = this.itemsByColumnId.get(itemToMove.columnId)
+      .filter(item => item.id !== itemToMove.id)
+      .map(item => {
+        return {
+          ...item,
+          position: this.determineNewPosition(targetPosition, itemToMove.position, item.position)
+        };
+      });
 
-      newItems.push({ ...itemToMove, position: targetPosition });
-      this.itemsByColumnId.set(itemToMove.columnId, newItems);
+    newItems.push({ ...itemToMove, position: targetPosition });
+    this.itemsByColumnId.set(itemToMove.columnId, newItems);
   }
 
   private determineNewPosition(newPos: number, oldPos: number, itemPos: number) {

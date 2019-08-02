@@ -20,7 +20,7 @@ export class ColumnComponent implements OnInit {
   itemSwitchedColumn: EventEmitter<{ oldColumn: number, newCoulumn: number }> = new EventEmitter();
   @ViewChild('itemNameEl', { static: false })
   itemNameEl: ElementRef;
-  items: Observable<Item[]>;
+  $items: Observable<Item[]>;
   addModeEnabled = false;
   sourcedClickEvent = false;
 
@@ -74,7 +74,7 @@ export class ColumnComponent implements OnInit {
   }
 
   private refreshItems() {
-    this.items = this.itemService.getAllItemsForColumn(this.column.id).pipe(
+    this.$items = this.itemService.getAllItemsForColumn(this.column.id).pipe(
       map(items => items.sort((left, right) => left.position - right.position))
     );
   }

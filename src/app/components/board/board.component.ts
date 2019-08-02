@@ -14,20 +14,20 @@ export class BoardComponent implements OnInit {
 
   @Input()
   board: Board;
-  columns: Observable<Column[]>;
+  $columns: Observable<Column[]>;
   allDropLists: string[];
 
   constructor(private columnService: ColumnService) { }
 
   ngOnInit() {
-    this.columns = this.columnService.getAllForBoard(this.board.id).pipe(
+    this.$columns = this.columnService.getAllForBoard(this.board.id).pipe(
       map(columns => columns.sort((left, right) => left.position - right.position)),
       tap(columns => this.allDropLists = columns.map(column => `${column.name}${column.id}`)),
     );
   }
 
   refreshColumns() {
-    this.columns = this.columnService.getAllForBoard(this.board.id).pipe(
+    this.$columns = this.columnService.getAllForBoard(this.board.id).pipe(
       map(columns => columns.sort((left, right) => left.position - right.position)),
       tap(columns => this.allDropLists = columns.map(column => `${column.name}${column.id}`)),
     );

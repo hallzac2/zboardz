@@ -7,7 +7,7 @@
                     class="column-content column-drag-zone"
                     cdkDropList
                     (cdkDropListDropped)="onDrop($event)">
-    <app-item *ngFor="let item of items | async"
+    <app-item *ngFor="let item of $items | async"
               [item]="item"
               cdkDrag
               [cdkDragData]="item"></app-item>

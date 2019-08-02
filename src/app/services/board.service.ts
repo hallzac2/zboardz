@@ -12,7 +12,7 @@ export class BoardService {
   constructor() {
     this.boardsById.set(1, { id: 1, name: 'Test Board' });
   }
-  
+
   getById(id: number): Observable<Board> {
     return of(this.boardsById.get(id));
   }
