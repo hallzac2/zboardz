@@ -1,6 +1,6 @@
-export interface Column {
-  id?: number;
+import { ReorderableItem } from '../stores/reorderable-item';
+
+export interface Column extends ReorderableItem {
   boardId: number;
-  position: number;
   name: string;
 }
