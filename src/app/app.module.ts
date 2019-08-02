@@ -13,13 +13,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BoardComponent } from './components/board/board.component';
 import { ColumnComponent } from './components/column/column.component';
 import { ItemComponent } from './components/item/item.component';
+import { AddComponent } from './components/add/add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
     ColumnComponent,
-    ItemComponent
+    ItemComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,

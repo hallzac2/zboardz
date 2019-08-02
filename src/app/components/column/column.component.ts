@@ -18,11 +18,7 @@ export class ColumnComponent implements OnInit {
   allDropLists: string[];
   @Output()
   itemSwitchedColumn: EventEmitter<{ oldColumn: number, newCoulumn: number }> = new EventEmitter();
-  @ViewChild('itemNameEl', { static: false })
-  itemNameEl: ElementRef;
   $items: Observable<Item[]>;
-  addModeEnabled = false;
-  sourcedClickEvent = false;
 
   constructor(private itemService: ItemService) { }
 
@@ -30,36 +26,10 @@ export class ColumnComponent implements OnInit {
     this.refreshItems();
   }
 
-  @HostListener('document:click')
-  handleOutsideClick() {
-    if (!this.sourcedClickEvent) {
-      this.disableAddMode();
-    } else {
-      this.sourcedClickEvent = false;
-    }
-  }
-
-  enableAddMode($event) {
-    this.sourcedClickEvent = true;
-    this.addModeEnabled = true;
-    this.focusItemNameInput();
-  }
-
-  disableAddMode() {
-    this.addModeEnabled = false;
-  }
-
-  addItem($event) {
-    $event.stopPropagation();
-    const itemNameNativeEl = this.itemNameEl.nativeElement;
-
-    if (itemNameNativeEl.value) {
-      const item: Item = { columnId: this.column.id, name: itemNameNativeEl.value };
-      this.itemService.add(item);
-      this.refreshItems();
-      itemNameNativeEl.value = '';
-    }
-    this.focusItemNameInput();
+  addItem(name: string) {
+    const item: Item = { columnId: this.column.id, name };
+    this.itemService.add(item);
+    this.refreshItems();
   }
 
   onDrop(event) {
@@ -87,10 +57,5 @@ export class ColumnComponent implements OnInit {
   private handleReorderItems(item: Item, targetPosition: number) {
     this.itemService.moveItemToPosition(item, targetPosition);
     this.refreshItems();
-  }
-
-  private focusItemNameInput() {
-    // Use setTimeout to allow for the zone to stabilize
-    setTimeout(() => this.itemNameEl.nativeElement.focus());
   }
 }
