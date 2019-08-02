@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Column } from '../models/column';
 import { Observable, of } from 'rxjs';
+import { ReorderableItemStore } from '../stores/reorderable-item-store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ColumnService {
 
-  constructor() { }
+  private store = new ReorderableItemStore<Column>('boardId');
+
+  constructor() {
+    this.store.add({ boardId: 1, name: 'TODO' });
+    this.store.add({ boardId: 1, name: 'DOING' });
+    this.store.add({ boardId: 1, name: 'DONE' });
+  }
 
   getAllForBoard(boardId: number): Observable<Column[]> {
-    return of([
-      { id: 1, boardId: 1, position: 1, name: 'TODO' },
-      { id: 2, boardId: 1, position: 2, name: 'Doing' },
-      { id: 3, boardId: 1, position: 3, name: 'Done' },
-    ]);
+    return this.store.getAllForKey(boardId);
   }
 }

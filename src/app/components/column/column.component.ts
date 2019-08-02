@@ -17,7 +17,7 @@ export class ColumnComponent implements OnInit {
   @Input()
   allDropLists: string[];
   @Output()
-  itemSwitchedColumn: EventEmitter<{ oldColumn: number, newCoulumn: number }> = new EventEmitter();
+  itemSwitchedColumn: EventEmitter<{ oldColumn: number, newColumn: number }> = new EventEmitter();
   $items: Observable<Item[]>;
 
   constructor(private itemService: ItemService) { }
@@ -43,7 +43,7 @@ export class ColumnComponent implements OnInit {
     }
   }
 
-  private refreshItems() {
+  refreshItems() {
     this.$items = this.itemService.getAllItemsForColumn(this.column.id).pipe(
       map(items => items.sort((left, right) => left.position - right.position))
     );
@@ -51,7 +51,7 @@ export class ColumnComponent implements OnInit {
 
   private handleMoveItemToColumn(item: Item, targetPosition: number) {
     this.itemService.moveItemToColumn(item, this.column.id, targetPosition);
-    this.itemSwitchedColumn.emit({ oldColumn: item.columnId, newCoulumn: this.column.id });
+    this.itemSwitchedColumn.emit({ oldColumn: item.columnId, newColumn: this.column.id });
   }
 
   private handleReorderItems(item: Item, targetPosition: number) {
