@@ -12,6 +12,11 @@
   min-height: 50px;
 }
 
+.column-drag-zone {
+  padding-bottom: 30px;
+  margin-bottom: 0;
+}
+
 .button-container {
   display: flex;
   justify-content: flex-end;
@@ -19,4 +24,16 @@
 
 .cancel-button {
   margin-right: 8px;
+}
+
+.cdk-drag {
+  transition: transform 100ms ease;
+}
+
+.cdk-drag-animating {
+  transition: transform 300ms ease;
+}
+
+.cdk-drag-placeholder {
+  transition: transform 100ms ease;
 }

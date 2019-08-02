@@ -4,7 +4,7 @@
   </mat-card-header>
   <mat-card-content id="{{column.name + column.id}}"
                     [cdkDropListConnectedTo]="allDropLists"
-                    class="column-content"
+                    class="column-content column-drag-zone"
                     cdkDropList
                     (cdkDropListDropped)="onDrop($event)">
     <app-item *ngFor="let item of items | async"
