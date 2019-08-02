@@ -80,9 +80,7 @@ export class ColumnComponent implements OnInit {
   }
 
   private handleMoveItemToColumn(item: Item, targetPosition: number) {
-    this.itemService.delete(item);
-    const newItem = { ...item, columnId: this.column.id };
-    this.itemService.moveItemToPosition(newItem, targetPosition);
+    this.itemService.moveItemToColumn(item, this.column.id, targetPosition);
     this.itemSwitchedColumn.emit({ oldColumn: item.columnId, newCoulumn: this.column.id });
   }
 
