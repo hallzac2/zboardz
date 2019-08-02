@@ -1,6 +1,15 @@
 {
   "name": "zboardz",
   "version": "0.0.0",
+  "author": {
+    "name": "Zackary Hall",
+    "email": "hallzac2@isu.edu"
+  },
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hallzac2/zboardz.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +18,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~8.1.2",
     "@angular/cdk": "~8.1.1",
